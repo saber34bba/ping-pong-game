@@ -72,7 +72,7 @@ class _HomePageState extends State<MyHomePage>
       vsync: this,
     );
 
-    animation = Tween<double>(begin: 0, end: 800).animate(controller);
+    animation = Tween<double>(begin: 0, end: 0).animate(controller);
 
     animation.addListener(() {
       setState(() {
@@ -109,6 +109,7 @@ class _HomePageState extends State<MyHomePage>
                             child: Divider(
                               color: Colors.green,
                               height: 36,
+                              thickness: 3,
                             ),
                           ),
                           Container(
@@ -119,6 +120,13 @@ class _HomePageState extends State<MyHomePage>
                                 border:
                                     Border.all(color: Colors.green, width: 3)),
                           ),
+                              Expanded(
+                            child: Divider(
+                              color: Colors.green,
+                              height: 36,
+                              thickness: 3,
+                            ),
+                          ),
                         ],
                       )),
                   showScore(),
@@ -126,7 +134,16 @@ class _HomePageState extends State<MyHomePage>
                       top: 10,
                       left: 10,
                       child: Text("Score:\t" + score.toString())),
-                  Positioned(
+               
+                  /*for (int i=1;i<3;i++)
+                    Positioned(
+                    top:posY>0? posY-i*20:posY+i*20,
+                    left:posX<0? posX-i*20:posX+i*20,
+                    child: CustomPaint(
+                      painter: Ballshadow(),
+                    ),
+                  ),*/
+                     Positioned(
                     top: posY,
                     left: posX,
                     child: CustomPaint(
@@ -163,18 +180,18 @@ class _HomePageState extends State<MyHomePage>
 
   bool show = false;
   Widget showScore() {
-    Future.delayed(const Duration(milliseconds: 5000), () {
-      setState(() {
-        show = false;
-      });
-    });
-    return show
+       return show
         ? Align(
             alignment: Alignment.center,
             child: TweenAnimationBuilder<double>(
               tween: Tween<double>(begin: 0, end: 300),
-              duration: const Duration(seconds: 3),
+              duration: const Duration(seconds: 5),
               builder: (BuildContext context, double size, child) {
+                 Future.delayed(const Duration(seconds: 10), () {
+      setState(() {
+        show = false;
+      });
+    });
                 return Text(
                   score.toString(),
                   style: TextStyle(fontSize: 30),
@@ -255,10 +272,31 @@ class _HomePageState extends State<MyHomePage>
 }
 
 class Ball extends CustomPainter {
+
+
   @override
   void paint(Canvas canvas, Size size) {
     Paint _paint = new Paint()
-      ..color = Colors.green[200]
+      ..color =  Colors.green
+      ..strokeWidth = 3;
+
+    canvas.drawCircle(Offset(100, size.height + 100), 30, _paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    // TODO: implement shouldRepaint
+    return true;
+  }
+}
+
+class Ballshadow extends CustomPainter {
+
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint _paint = new Paint()
+      ..color =  Colors.red[200].withOpacity(0.8)
       ..strokeWidth = 3;
 
     canvas.drawCircle(Offset(100, size.height + 100), 30, _paint);
