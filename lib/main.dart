@@ -48,7 +48,6 @@ class _HomePageState extends State<MyHomePage>
     }
 
     if (posY >= height - 110 - 30 && vDir == Direction.down) {
- 
       if (posX >= (lineposition) && posX <= (lineposition + 200)) {
         show = true;
         score++;
@@ -57,7 +56,6 @@ class _HomePageState extends State<MyHomePage>
         dialog();
 
         controller.stop();
-
       }
     }
     if (posY <= -100 && vDir == Direction.up) {
@@ -103,6 +101,26 @@ class _HomePageState extends State<MyHomePage>
               width = constraints.maxWidth;
               return Stack(
                 children: [
+                  Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: Colors.green,
+                              height: 36,
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    Border.all(color: Colors.green, width: 3)),
+                          ),
+                        ],
+                      )),
                   showScore(),
                   Positioned(
                       top: 10,
